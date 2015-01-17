@@ -70,15 +70,6 @@ module singleCityWall() {
     roundCityWall();
 }
 
-module mountain(radius, height, peekedness = .8) {
-    rotate_extrude(convexity = 10, $fn = 12)
-    polygon(points = [for (i = [-3:.2:1]) [
-        (i>0.01)? 0 : i/3*radius,
-        (i>0.01)? 0 : height * pow(exp(-i*i),peekedness)     ]     ]); 
-    
-    
-}
-
 
 module vulcano(radius = 18, height = 10, peekedness =.8, seed = 0) {
     rots = rands(0,360,4, seed);
@@ -130,30 +121,7 @@ module fffw_vulcano(seed=13) {
 
 
 
-module fence(amax=360, steps = 10, r = 10, seed =623) {
-    xoff = rands(-1,1,steps+1,seed);
-    yoff = rands(-1,1,steps+1,seed+steps*2);
-    linear_extrude(height=1)
-    for (i=[0:steps-1])
-        hull() {
-            translate([r*sin(i/steps*amax) + xoff[i], r*cos(i/steps*amax) + yoff[i] ])
-            circle(r=.1);
-            translate([r*sin((i+1)/steps*amax) + xoff[i+1], r*cos((i+1)/steps*amax) + yoff[i+1] ])
-            circle(r=.1);
-        }
-    
-}
 
-
-
-
-module farm(seed= 1243) {
-    farmhouse();
-    translate([0,-8])
-    rotate([0,0,-10])
-    fence(amax=340, steps = 8, r=8);
-    
-}
 
 module ffww_farm(seed=632) {
     ffww(seed);
